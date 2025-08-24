@@ -1,7 +1,7 @@
 import pytest
 
-import package_name
-from package_name import add_digit
+import bumplot
+from bumplot import add_digit
 
 
 @pytest.mark.parametrize(
@@ -18,4 +18,4 @@ def test_sum_digit(a, b, expected):
 
 
 def test_version():
-    assert package_name.__version__ == "0.1.0"
+    assert bumplot.__version__ == "0.1.0"

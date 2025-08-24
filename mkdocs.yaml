@@ -1,6 +1,6 @@
-site_name: package_name
-site_url: https://your_name.github.io/package_name/
-repo_url: https://github.com/your_name/package_name
+site_name: bumplot
+site_url: https://y-sunflower.github.io/bumplot/
+repo_url: https://github.com/y-sunflower/bumplot
 
 theme:
   name: material

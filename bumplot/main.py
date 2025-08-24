@@ -18,7 +18,7 @@ def add_digit(a, b):
     ---
 
     ```py
-    from package_name import add_digit
+    from bumplot import add_digit
 
     add_digit(5, 8)
     ```

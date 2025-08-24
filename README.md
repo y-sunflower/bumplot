@@ -1,6 +1,5 @@
 # Python package template
 
-
 <!-- Automatically generated, uses README.qmd to modify README.md -->
 
 A python package template that contains everything you need to:
@@ -8,13 +7,13 @@ A python package template that contains everything you need to:
 - **create**
 - ~~configure~~
 - `test`
-- *document*
+- _document_
 - <u>deploy</u>
 
 <br>
 
     root/
-    ├── package_name/             - Main package directory
+    ├── bumplot/             - Main package directory
     │   ├── __init__.py
     │   └── main.py/
     ├── tests/                    - Unit tests
@@ -52,16 +51,16 @@ A python package template that contains everything you need to:
 - Click on `Use this template` and `Create a new repository`
 - Clone your repo
 
-``` bash
-git clone https://github.com/your_name/package_name.git
+```bash
+git clone https://github.com/y-sunflower/bumplot.git
 ```
 
 <br>
 
 ### Replace with your package info
 
-- Replace **all** `your_name` with your GitHub username or organization
-- Replace **all** `package_name` with your actual package
+- Replace **all** `y-sunflower` with your GitHub username or organization
+- Replace **all** `bumplot` with your actual package
 - Replace info in `pyproject.toml`
 - Change the `LICENSE` file to your actual license (optional)
 
@@ -69,7 +68,7 @@ git clone https://github.com/your_name/package_name.git
 
 ### Install dependencies
 
-``` bash
+```bash
 uv sync --all-groups
 uv pip install -e .
 uv run pre-commit install
@@ -79,13 +78,13 @@ uv run pre-commit install
 
 ### Run tests
 
-``` bash
+```bash
 make test
 ```
 
 To generate a code coverage badge and see your code coverage, run:
 
-``` bash
+```bash
 make coverage
 ```
 
@@ -103,7 +102,7 @@ deployment.
 
 - Preview locally:
 
-``` bash
+```bash
 make preview
 ```
 
@@ -118,7 +117,7 @@ can help you here!
 In `docs/stylesheets/style.css`, change the color value to change the
 overall style of site:
 
-``` css
+```css
 :root {
   --primary-color: #0096c7;
 }
@@ -149,7 +148,7 @@ the scripts and the official documentation.
 Since the distribution of new versions is reserved for a few people,
 feel free to remove it from the git tracker with:
 
-``` bash
+```bash
 git rm --cached scripts/release.sh
 ```
 
@@ -171,8 +170,8 @@ This is optional (you can use a plain `README.md` and delete
   options](https://quarto.org/docs/authoring/markdown-basics.html)
 - you can include code (for example, dynamic content)
 
-``` python
-from package_name import add_digit
+```python
+from bumplot import add_digit
 
 # The output here is not hardcoded
 print(add_digit(2, 5))
@@ -185,7 +184,7 @@ It works perfectly well with most IDEs. You can install Quarto
 
 To generate `README.md`, run (make sure your venv is activated):
 
-``` bash
+```bash
 make readme
 ```
 
