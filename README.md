@@ -1,3 +1,5 @@
+
+
 <!-- Automatically generated, uses README.qmd to modify README.md -->
 
 # `bumplot`: easily create and customize bump charts in Python
@@ -19,7 +21,7 @@ documentation](https://y-sunflower.github.io/bumplot/)
 
 ## Get started
 
-```python
+``` python
 import matplotlib.pyplot as plt
 import pandas as pd
 
