@@ -27,7 +27,8 @@ nav:
   - Home: index.md
   - Examples: examples.md
   - Reference:
-      - reference/add_digit.md
+      - reference/bumplot.md
+      - reference/bezier.md
   - Contributing: contributing.md
 
 extra_css:
