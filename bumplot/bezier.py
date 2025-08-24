@@ -2,10 +2,17 @@ from matplotlib.path import Path
 import numpy as np
 
 
-def bezier_curve(x: np.ndarray, y: np.ndarray, force: float):
+def bezier_curve(
+    x: np.ndarray,
+    y: np.ndarray,
+    force: float,
+) -> tuple[list[tuple[float, float]], list[int]]:
     """
     Generate vertices and path codes for a smooth cubic Bézier curve
     passing through a sequence of points.
+
+    This function is used under the hood by [`bumplot()`](./bumplot.md),
+    but you can use it too.
 
     Args:
         x: X-coordinates of the points.

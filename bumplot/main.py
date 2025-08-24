@@ -27,9 +27,12 @@ def bumplot(
     Creates bump plot, or bump chart, from multiple numerical
     columns.
 
+    It requires the data to be in wide format (e.g., one column
+    per line you want to plot).
+
     Args:
         x: colname of the x-axis variable
-        y: colnames of the y-axis variables
+        y_columns: colnames of the y-axis variables
         data: A dataframe
         curve_force: Smoothing factor controlling curve tightness. Higher
             values increase curvature by moving control points further away
@@ -62,7 +65,16 @@ def bumplot(
         )
 
     ranked: IntoDataFrame = _ranked_df(data, x=x, y_columns=y_columns)
-    x_values: np.ndarray = np.ravel(ranked.select(x).to_numpy())
+    x_values_raw: np.ndarray = np.ravel(ranked.select(x).to_numpy())
+
+    if np.issubdtype(x_values_raw.dtype, np.number):
+        x_values = x_values_raw
+        x_labels = x_values_raw
+    else:
+        uniques = list(dict.fromkeys(x_values_raw))  # preserves order
+        mapping = {val: i for i, val in enumerate(uniques)}
+        x_values = np.array([mapping[val] for val in x_values_raw], dtype=int)
+        x_labels = x_values_raw
 
     for i, col in enumerate(y_columns):
         y_values: np.ndarray = np.ravel(ranked.select(col).to_numpy())
@@ -87,6 +99,6 @@ def bumplot(
     else:
         ticks: list[int] = list(reversed(ticks))
     ax.set_yticks(ticks=ticks)
-    ax.set_xticks(ticks=x_values)
+    ax.set_xticks(ticks=np.unique(x_values), labels=np.unique(x_labels))
 
     return ax

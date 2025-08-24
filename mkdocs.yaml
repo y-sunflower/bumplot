@@ -10,7 +10,8 @@ theme:
   features:
     - content.code.copy
     - navigation.path
-    - navigation.tabs
+    - content.footnote.tooltips
+    - navigation.expand
   icon:
     repo: fontawesome/brands/github
 

@@ -1,5 +1,11 @@
 # `bumplot`: easily create and customize bump charts in Python
 
+<img src="https://github.com/JosephBARBIERDARNAL/static/blob/main/python-libs/bumplot/image.png?raw=true" alt="bumplot logo" align="right" width="180px"/>
+
+`bumplot` is a small Python package made to facilitate the creation of **bump charts** using matplotlib and Bézier curves. It has high customization capabilities too!
+
+Bump charts are useful when the focus is on comparing **relative rankings**—who is ahead of whom—rather than the exact magnitude of the differences.
+
 <br>
 <br>
 
@@ -8,11 +14,11 @@
 ```python
 # mkdocs: render
 import matplotlib.pyplot as plt
+import pandas as pd
+
 from bumplot import bumplot
 
-import polars as pl
-
-data = pl.DataFrame(
+data = pd.DataFrame(
     {
         "x": [2020, 2021, 2022, 2023],
         "A": [10, 50, 20, 80],
@@ -23,12 +29,11 @@ data = pl.DataFrame(
 x = "x"
 y_columns = ["A", "B", "C"]
 
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(8, 4))
 bumplot(
     x=x,
     y_columns=y_columns,
     data=data,
-    ax=ax,
     curve_force=0.5,
     plot_kwargs={"lw": 4},
     scatter_kwargs={"s": 150, "ec": "black", "lw": 2},
@@ -38,3 +43,13 @@ ax.legend()
 ax.spines[["top", "right", "left", "bottom"]].set_visible(False)
 ax.grid(alpha=0.4)
 ```
+
+[See more examples](./examples.md)
+
+## Installation
+
+```
+pip install bumplot
+```
+
+<br>
