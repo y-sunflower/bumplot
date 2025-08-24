@@ -8,7 +8,11 @@ import polars as pl
 
 import pytest
 
-from bumplot import bumplot
+import bumplot
+
+
+def test_version():
+    assert bumplot.__version__ == "0.1.0"
 
 
 @pytest.mark.parametrize("backend", [pd, pl])
@@ -24,7 +28,7 @@ def test_bumplot(backend, curve_force, colors):
     df = backend.DataFrame(data)
 
     fig, ax = plt.subplots(figsize=(6, 4))
-    ax2 = bumplot(
+    ax2 = bumplot.bumplot(
         x="x",
         y_columns=["y1", "y2", "y3"],
         data=df,
@@ -61,7 +65,7 @@ def test_bumplot_error():
         AssertionError,
         match="Not enough colors, expected <=3, found 2",
     ):
-        bumplot(
+        bumplot.bumplot(
             x="x",
             y_columns=["y1", "y2", "y3"],
             data=df,
