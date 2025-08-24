@@ -20,7 +20,6 @@ documentation](https://y-sunflower.github.io/bumplot/)
 ## Get started
 
 ```python
-# mkdocs: render
 import matplotlib.pyplot as plt
 import pandas as pd
 
