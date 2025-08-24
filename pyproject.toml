@@ -9,13 +9,16 @@ authors = [
   { name="Joseph Barbier", email="joseph.barbierdarnal@gmail.com" },
 ]
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
     "Development Status :: 3 - Alpha"
 ]
-dependencies = []
+dependencies = [
+    "matplotlib>=3.9.4",
+    "narwhals>=2.0.0",
+]
 
 [build-system]
 requires = [
@@ -39,6 +42,8 @@ dev = [
     "mkdocstrings-python>=1.16.5",
     "coverage>=7.9.1",
     "genbadge>=1.1.2",
+    "pandas>=2.3.2",
+    "polars>=1.32.3",
 ]
 quarto = [
     "jupyter>=1.1.1",
