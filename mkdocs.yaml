@@ -5,6 +5,8 @@ repo_url: https://github.com/y-sunflower/bumplot
 theme:
   name: material
   custom_dir: overrides
+  palette:
+    primary: white
   features:
     - content.code.copy
     - navigation.path
@@ -14,6 +16,7 @@ theme:
 
 plugins:
   - search
+  - mkdocs_matplotlib
   - mkdocstrings:
       default_handler: python
       handlers:

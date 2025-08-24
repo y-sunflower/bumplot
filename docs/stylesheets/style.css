@@ -1,5 +1,5 @@
 :root {
-  --primary-color: #e76f51;
+  --primary-color: #ffc300;
 }
 
 h2,
@@ -24,7 +24,7 @@ h4 {
 
 footer.custom-footer {
   background-color: var(--primary-color);
-  color: #f1f1f1;
+  color: black;
   padding: 20px 20px;
   text-align: center;
   margin-top: 50px;
@@ -95,8 +95,8 @@ footer.custom-footer {
 }
 
 .footer-copy {
-  font-size: 0.7rem;
-  color: #ffffff;
+  font-size: 0.8rem;
+  color: black;
 }
 
 .sponsor-name {

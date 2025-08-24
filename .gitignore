@@ -19,5 +19,5 @@ env/
 *cache*
 
 *.zip
-sandbox.*
+sandbox/
 scripts/release.sh

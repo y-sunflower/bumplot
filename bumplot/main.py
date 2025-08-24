@@ -4,16 +4,18 @@ from matplotlib.path import Path
 import matplotlib.patches as patches
 from matplotlib.patches import PathPatch
 
-from narwhals.stable.v2.typing import Frame
+import numpy as np
+
+from narwhals.typing import IntoDataFrame
 
 from bumplot.bezier import bezier_curve
-from bumplot._utils import _get_first_n_colors
+from bumplot._utils import _get_first_n_colors, _ranked_df
 
 
 def bumplot(
     x: str,
     y_columns: list[str],
-    data: Frame,
+    data: IntoDataFrame,
     curve_force: float = 1,
     invert_y_axis: bool = True,
     colors: list | None = None,
@@ -44,34 +46,40 @@ def bumplot(
     if ax is None:
         ax: Axes = plt.gca()
 
+    default_plot_kwargs = {"facecolor": "none", "lw": 2}
     if plot_kwargs is None:
         plot_kwargs: dict = {}
+    default_plot_kwargs.update(plot_kwargs)
 
     if scatter_kwargs is None:
         scatter_kwargs: dict = {}
 
     if colors is None:
         colors: list[str] = _get_first_n_colors(n=len(y_columns))
+    else:
+        assert len(y_columns) <= len(colors), (
+            f"Not enough colors, expected <={len(y_columns)}, found {len(colors)}"
+        )
 
-    ranked: Frame = data.set_index(x).rank(axis=1, ascending=False, method="first")
+    ranked: IntoDataFrame = _ranked_df(data, x=x, y_columns=y_columns)
+    x_values: np.ndarray = np.ravel(ranked.select(x).to_numpy())
 
     for i, col in enumerate(y_columns):
+        y_values: np.ndarray = np.ravel(ranked.select(col).to_numpy())
         vertices, codes = bezier_curve(
-            x=ranked.index.values,
-            y=ranked[col].values,
+            x=x_values,
+            y=y_values,
             force=curve_force,
         )
 
         path: Path = Path(vertices=vertices, codes=codes)
         patch: PathPatch = patches.PathPatch(
             path=path,
-            facecolor="none",
-            lw=2,
             edgecolor=colors[i],
-            **plot_kwargs,
+            **default_plot_kwargs,
         )
         ax.add_patch(patch)
-        ax.scatter(ranked.index, ranked[col], color=colors[i], **scatter_kwargs)
+        ax.scatter(x_values, y_values, color=colors[i], label=col, **scatter_kwargs)
 
     ticks: list[int] = list(range(1, len(y_columns) + 1))
     if invert_y_axis:
@@ -79,5 +87,6 @@ def bumplot(
     else:
         ticks: list[int] = list(reversed(ticks))
     ax.set_yticks(ticks=ticks)
+    ax.set_xticks(ticks=x_values)
 
     return ax

@@ -1,10 +1,10 @@
 [project]
 name = "bumplot"
-description = "Description"
+description = "Easily create and customize bump charts in Python"
 version = "0.1.0"
 license = "MIT"
 license-files = ["LICENSE"]
-keywords = ["a", "list", "of", "keywords"]
+keywords = ["bump", "bump plot", "bump charts", "matplotlib", "data", "visualization"]
 authors = [
   { name="Joseph Barbier", email="joseph.barbierdarnal@gmail.com" },
 ]
@@ -44,6 +44,8 @@ dev = [
     "genbadge>=1.1.2",
     "pandas>=2.3.2",
     "polars>=1.32.3",
+    "mkdocs-matplotlib>=0.10.1",
+    "pyarrow>=21.0.0",
 ]
 quarto = [
     "jupyter>=1.1.1",

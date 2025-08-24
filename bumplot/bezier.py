@@ -1,7 +1,8 @@
 from matplotlib.path import Path
+import numpy as np
 
 
-def bezier_curve(x, y, force: float):
+def bezier_curve(x: np.ndarray, y: np.ndarray, force: float):
     """
     Generate vertices and path codes for a smooth cubic Bézier curve
     passing through a sequence of points.

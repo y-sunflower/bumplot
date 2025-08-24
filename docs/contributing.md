@@ -4,10 +4,6 @@ Any kind of contribution is more than welcomed! There are several ways you can c
 - Implementation of new features or resolution of existing bugs
 - Enhancing the documentation
 
-## How `bumplot` works
-
-Here's how it works:
-
 ## Setting up your environment
 
 ### Install for development
@@ -44,13 +40,13 @@ You can now make changes to the package and start coding!
 - Test that everything works correctly by running:
 
 ```bash
-uv run pytest
+make test
 ```
 
 ### Preview documentation locally
 
 ```bash
-uv run mkdocs serve
+make preview
 ```
 
 ## Push changes
