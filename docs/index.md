@@ -26,13 +26,11 @@ data = pd.DataFrame(
         "C": [90, 20, 70, 40],
     }
 )
-x = "x"
-y_columns = ["A", "B", "C"]
 
 fig, ax = plt.subplots(figsize=(8, 4))
 bumplot(
-    x=x,
-    y_columns=y_columns,
+    x="x",
+    y_columns=["A", "B", "C"],
     data=data,
     curve_force=0.5,
     plot_kwargs={"lw": 4},
@@ -51,5 +49,12 @@ ax.grid(alpha=0.4)
 ```
 pip install bumplot
 ```
+
+## Features
+
+- Automatic ranking of your data (with support for both `pandas` and `polars`)
+- Accept categorical data for x-axis
+- Infinite customization capabilities
+- Easy control of the curvature intensity
 
 <br>
