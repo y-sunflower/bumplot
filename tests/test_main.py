@@ -15,19 +15,27 @@ def test_version():
     assert bumplot.__version__ == "0.1.0"
 
 
+@pytest.mark.parametrize(
+    "x",
+    [
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+        ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+    ],
+)
 @pytest.mark.parametrize("backend", [pd, pl])
 @pytest.mark.parametrize("curve_force", [0, 0.5, 1, 5])
 @pytest.mark.parametrize("colors", [None, ["#ffbe0b", "#ff006e", "#3a86ff"]])
-def test_bumplot(backend, curve_force, colors):
+def test_bumplot(x, backend, curve_force, colors):
     data = {
-        "x": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "x": x,
         "y1": [7, 2, 2, 5, 5, 6, 7, 2, 9, 1],
         "y2": [3, 2, 1, 10, 4, 8, 7, 2, 4, 2],
         "y3": [5, 4, 10, 1, 3, 6, 5, 2, 3, 7],
     }
     df = backend.DataFrame(data)
 
-    fig, ax = plt.subplots(figsize=(6, 4))
+    _, ax = plt.subplots(figsize=(6, 4))
     ax2 = bumplot.bumplot(
         x="x",
         y_columns=["y1", "y2", "y3"],
@@ -50,6 +58,8 @@ def test_bumplot(backend, curve_force, colors):
     ]
     assert len(pathcollections) == 3
 
+    plt.close("all")
+
 
 def test_bumplot_error():
     data = {
@@ -59,7 +69,7 @@ def test_bumplot_error():
         "y3": [5, 4, 10, 1, 3, 6, 5, 2, 3, 7],
     }
     df = pd.DataFrame(data)
-    fig, ax = plt.subplots(figsize=(6, 4))
+    _, ax = plt.subplots(figsize=(6, 4))
 
     with pytest.raises(
         AssertionError,
@@ -72,3 +82,5 @@ def test_bumplot_error():
             ax=ax,
             colors=["black", "black"],
         )
+
+    plt.close("all")

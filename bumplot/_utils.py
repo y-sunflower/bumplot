@@ -20,7 +20,7 @@ def _ranked_df(df: IntoDataFrame, x: str, y_columns: list[str]):
 
     df_native_ranked = (
         df_native.unpivot(on=y_columns, index=x)
-        .with_columns(nw.col("value").rank("ordinal").over(x))
+        .with_columns(nw.col("value").rank("ordinal", descending=True).over(x))
         .pivot(on="variable", index=x, values="value")
         .select(nw.col(x), nw.col(y_columns))
     )
