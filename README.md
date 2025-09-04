@@ -1,6 +1,5 @@
 # `bumplot`: easily create and customize bump charts in Python
 
-
 <!-- Automatically generated, uses README.qmd to modify README.md -->
 
 <img src="https://github.com/JosephBARBIERDARNAL/static/blob/main/python-libs/bumplot/image.png?raw=true" alt="bumplot logo" align="right" width="180px"/>
@@ -20,7 +19,7 @@ documentation](https://y-sunflower.github.io/bumplot/)
 
 ## Get started
 
-``` python
+```python
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -66,5 +65,6 @@ ax.grid(alpha=0.4)
 
 - Automatic ranking of your data (with support for both `pandas` and
   `polars`)
+- Accept categorical data for x-axis
 - Infinite customization capabilities
 - Easy control of the curvature intensity

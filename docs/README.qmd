@@ -78,5 +78,6 @@ pip install bumplot
 ## Features
 
 - Automatic ranking of your data (with support for both `pandas` and `polars`)
+- Accept categorical data for x-axis
 - Infinite customization capabilities
 - Easy control of the curvature intensity
