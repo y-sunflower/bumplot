@@ -12,7 +12,7 @@ import bumplot
 
 
 def test_version():
-    assert bumplot.__version__ == "0.1.0"
+    assert bumplot.__version__ == "0.1.1"
 
 
 @pytest.mark.parametrize(

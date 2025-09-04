@@ -1,7 +1,7 @@
 [project]
 name = "bumplot"
 description = "Easily create and customize bump charts in Python"
-version = "0.1.0"
+version = "0.1.1"
 license = "MIT"
 license-files = ["LICENSE"]
 keywords = ["bump", "bump plot", "bump charts", "matplotlib", "data", "visualization", "bezier", "curve"]
