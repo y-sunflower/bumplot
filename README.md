@@ -1,8 +1,7 @@
+# `bumplot`: easily create and customize bump charts in Python
 
 
 <!-- Automatically generated, uses README.qmd to modify README.md -->
-
-# `bumplot`: easily create and customize bump charts in Python
 
 <img src="https://github.com/JosephBARBIERDARNAL/static/blob/main/python-libs/bumplot/image.png?raw=true" alt="bumplot logo" align="right" width="180px"/>
 
@@ -35,13 +34,11 @@ data = pd.DataFrame(
         "C": [90, 20, 70, 40],
     }
 )
-x = "x"
-y_columns = ["A", "B", "C"]
 
 fig, ax = plt.subplots(figsize=(8, 4))
 bumplot(
-    x=x,
-    y_columns=y_columns,
+    x="x",
+    y_columns=["A", "B", "C"],
     data=data,
     curve_force=0.5,
     plot_kwargs={"lw": 4},
@@ -53,7 +50,7 @@ ax.spines[["top", "right", "left", "bottom"]].set_visible(False)
 ax.grid(alpha=0.4)
 ```
 
-![](README_files/figure-commonmark/cell-2-output-1.png)
+![](README_files/figure-commonmark/cell-3-output-1.png)
 
 [See more examples](https://y-sunflower.github.io/bumplot/examples/)
 
@@ -62,3 +59,12 @@ ax.grid(alpha=0.4)
 ## Installation
 
     pip install bumplot
+
+<br><br>
+
+## Features
+
+- Automatic ranking of your data (with support for both `pandas` and
+  `polars`)
+- Infinite customization capabilities
+- Easy control of the curvature intensity

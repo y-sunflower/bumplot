@@ -1,8 +1,19 @@
 ---
 format: gfm
+from: markdown-smart
+default-image-extension: ""
 ---
 
 <!-- Automatically generated, uses README.qmd to modify README.md -->
+
+```{python}
+# | include: false
+# | echo: false
+
+import matplotlib.pyplot as plt
+
+plt.rcParams["figure.dpi"] = 200
+```
 
 # `bumplot`: easily create and customize bump charts in Python
 
@@ -35,13 +46,11 @@ data = pd.DataFrame(
         "C": [90, 20, 70, 40],
     }
 )
-x = "x"
-y_columns = ["A", "B", "C"]
 
 fig, ax = plt.subplots(figsize=(8, 4))
 bumplot(
-    x=x,
-    y_columns=y_columns,
+    x="x",
+    y_columns=["A", "B", "C"],
     data=data,
     curve_force=0.5,
     plot_kwargs={"lw": 4},
@@ -63,3 +72,11 @@ ax.grid(alpha=0.4)
 ```
 pip install bumplot
 ```
+
+<br><br>
+
+## Features
+
+- Automatic ranking of your data (with support for both `pandas` and `polars`)
+- Infinite customization capabilities
+- Easy control of the curvature intensity
