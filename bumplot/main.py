@@ -60,10 +60,11 @@ def bumplot(
     if colors is None:
         colors: list[str] = _get_first_n_colors(n=len(y_columns))
     else:
-        assert len(y_columns) <= len(colors), (
-            f"Not enough colors, expected <={len(y_columns)}, found {len(colors)}"
-        )
-
+        if len(colors) < len(y_columns):
+            raise ValueError(
+                f"The number of colors provided ({len(colors)}) is insufficient. "
+                f"Expected at least {len(y_columns)} colors to match the {len(y_columns)} data series."
+            )
     ranked: IntoDataFrame = _ranked_df(data, x=x, y_columns=y_columns)
     x_values_raw: np.ndarray = np.ravel(ranked.select(x).to_numpy())
 
