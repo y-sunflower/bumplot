@@ -72,8 +72,8 @@ def test_bumplot_error():
     _, ax = plt.subplots(figsize=(6, 4))
 
     with pytest.raises(
-        AssertionError,
-        match="Not enough colors, expected <=3, found 2",
+        ValueError, 
+        match="Not enough colors: expected at least 3, but got 2",
     ):
         bumplot.bumplot(
             x="x",
