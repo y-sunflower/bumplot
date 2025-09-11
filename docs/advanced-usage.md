@@ -1,6 +1,13 @@
-Here you'll find advanced examples of `bumplot`.
+`bumplot` is designed to integrate seamlessly with matplotlib and allow you to control virtually everything.
 
-- Water source in Africa
+Here you will find examples that show how to use `bumplot` in more complex, but also more realistic, cases based on real data.
+
+These examples are also designed to be easy to reproduce: you should be able to simply copy and paste the code onto your computer.
+
+<br>
+<br>
+
+- Water sources in Africa
 
 ```py
 # mkdocs: render
@@ -29,7 +36,7 @@ highlight_colors = {
     "Tanzania": "#bb3e03",
 }
 
-last_decade = df.index.max()  # or use 2020
+last_decade = df.index.max()
 countries = df.loc[last_decade].sort_values(ascending=False).index.to_list()[1:]
 colors = [highlight_colors.get(col, "lightgrey") for col in countries]
 
