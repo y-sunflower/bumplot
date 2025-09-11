@@ -45,6 +45,9 @@ dev = [
     "pandas>=2.3.2",
     "polars>=1.32.3",
     "mkdocs-matplotlib>=0.10.1",
+    "pyfonts>=1.1.1",
+    "pypalettes>=0.1.6",
+    "ty>=0.0.1a20",
 ]
 quarto = [
     "jupyter>=1.1.1",

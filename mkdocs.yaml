@@ -30,6 +30,7 @@ plugins:
 nav:
   - Home: index.md
   - Examples: examples.md
+  - Advanced usage: advanced-usage.md
   - Reference:
       - reference/bumplot.md
       - reference/bezier.md
