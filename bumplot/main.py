@@ -15,10 +15,11 @@ from bumplot._utils import _get_first_n_colors, _ranked_df
 def _to_ordinal(n: int) -> str:
     """Convert number to ordinal string (1 -> '1st', 2 -> '2nd', etc.)"""
     if 11 <= n % 100 <= 13:
-        suffix = 'th'
+        suffix = "th"
     else:
-        suffix = {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')
+        suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
     return f"{n}{suffix}"
+
 
 def bumplot(
     x: str,
@@ -103,20 +104,20 @@ def bumplot(
         ax.scatter(x_values, y_values, color=colors[i], label=col, **scatter_kwargs)
 
     ticks: list[int] = list(range(1, len(y_columns) + 1))
-    
+
     if invert_y_axis:
         ax.invert_yaxis()
     else:
         ticks: list[int] = list(reversed(ticks))
 
     ax.set_yticks(ticks=ticks)
-    
+
     if ordinal_label:
         ordinal_labels = [_to_ordinal(tick) for tick in ticks]
         ax.set_yticklabels(ordinal_labels)
     else:
         ax.set_yticklabels([str(tick) for tick in ticks])
-    
+
     ax.set_xticks(ticks=np.unique(x_values), labels=np.unique(x_labels))
 
     return ax

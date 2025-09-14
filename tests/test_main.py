@@ -85,6 +85,7 @@ def test_bumplot_error():
 
     plt.close("all")
 
+
 @pytest.mark.parametrize("ordinal_label", [True, False])
 def test_bumplot_ordinal_labels(ordinal_label):
     """Test that ordinal labels work correctly"""
@@ -92,27 +93,27 @@ def test_bumplot_ordinal_labels(ordinal_label):
         "x": [1, 2, 3],
         "y1": [1, 2, 3],
         "y2": [3, 1, 2],
-        "y3": [2, 3, 1], 
+        "y3": [2, 3, 1],
     }
     df = pd.DataFrame(data)
-    
+
     fig, ax = plt.subplots()
     ax = bumplot.bumplot(
         x="x",
-        y_columns=["y1", "y2", "y3"],  
+        y_columns=["y1", "y2", "y3"],
         data=df,
         ax=ax,
         ordinal_label=ordinal_label,
         invert_y_axis=False,
     )
-    
+
     y_labels = [label.get_text() for label in ax.get_yticklabels()]
-    
+
     if ordinal_label:
-        assert any('st' in label for label in y_labels)
-        assert any('nd' in label for label in y_labels) 
-        assert any('rd' in label for label in y_labels)  
+        assert any("st" in label for label in y_labels)
+        assert any("nd" in label for label in y_labels)
+        assert any("rd" in label for label in y_labels)
     else:
         assert all(label.isdigit() for label in y_labels)
-    
+
     plt.close("all")
