@@ -11,6 +11,7 @@ from narwhals.typing import IntoDataFrame
 from bumplot.bezier import bezier_curve
 from bumplot._utils import _get_first_n_colors, _ranked_df, _to_ordinal
 
+
 def bumplot(
     x: str,
     y_columns: list[str],
@@ -102,7 +103,11 @@ def bumplot(
 
     ax.set_yticks(ticks=ticks)
 
-    labels = [_to_ordinal(tick) for tick in ticks] if ordinal_labels else [str(tick) for tick in ticks]
+    labels = (
+        [_to_ordinal(tick) for tick in ticks]
+        if ordinal_labels
+        else [str(tick) for tick in ticks]
+    )
     ax.set_yticklabels(labels)
 
     ax.set_xticks(ticks=np.unique(x_values), labels=np.unique(x_labels))

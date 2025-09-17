@@ -98,7 +98,7 @@ def test_bumplot_ordinal_labels(ordinal_labels):
         "y5": [4, 5, 1, 2, 3],
     }
     df = pd.DataFrame(data)
-    
+
     fig, ax = plt.subplots()
     ax = bumplot.bumplot(
         x="x",
@@ -108,9 +108,9 @@ def test_bumplot_ordinal_labels(ordinal_labels):
         ordinal_labels=ordinal_labels,
         invert_y_axis=False,
     )
-    
+
     y_labels = [label.get_text() for label in ax.get_yticklabels()]
-    
+
     if ordinal_labels:
         assert "1st" in y_labels
         assert "2nd" in y_labels
@@ -119,5 +119,5 @@ def test_bumplot_ordinal_labels(ordinal_labels):
         assert "5th" in y_labels
     else:
         assert all(label.isdigit() for label in y_labels)
-    
+
     plt.close("all")
