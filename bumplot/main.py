@@ -9,17 +9,7 @@ import numpy as np
 from narwhals.typing import IntoDataFrame
 
 from bumplot.bezier import bezier_curve
-from bumplot._utils import _get_first_n_colors, _ranked_df
-
-
-def _to_ordinal(n: int) -> str:
-    """Convert number to ordinal string (1 -> '1st', 2 -> '2nd', etc.)"""
-    if 11 <= n % 100 <= 13:
-        suffix = "th"
-    else:
-        suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
-    return f"{n}{suffix}"
-
+from bumplot._utils import _get_first_n_colors, _ranked_df, _to_ordinal
 
 def bumplot(
     x: str,
@@ -31,7 +21,7 @@ def bumplot(
     plot_kwargs: dict | None = None,
     scatter_kwargs: dict | None = None,
     ax: Axes | None = None,
-    ordinal_label: bool = False,
+    ordinal_labels: bool = False,
 ) -> Axes:
     """
     Creates bump plot, or bump chart, from multiple numerical
@@ -112,11 +102,8 @@ def bumplot(
 
     ax.set_yticks(ticks=ticks)
 
-    if ordinal_label:
-        ordinal_labels = [_to_ordinal(tick) for tick in ticks]
-        ax.set_yticklabels(ordinal_labels)
-    else:
-        ax.set_yticklabels([str(tick) for tick in ticks])
+    labels = [_to_ordinal(tick) for tick in ticks] if ordinal_labels else [str(tick) for tick in ticks]
+    ax.set_yticklabels(labels)
 
     ax.set_xticks(ticks=np.unique(x_values), labels=np.unique(x_labels))
 

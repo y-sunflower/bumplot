@@ -86,34 +86,38 @@ def test_bumplot_error():
     plt.close("all")
 
 
-@pytest.mark.parametrize("ordinal_label", [True, False])
-def test_bumplot_ordinal_labels(ordinal_label):
+@pytest.mark.parametrize("ordinal_labels", [True, False])
+def test_bumplot_ordinal_labels(ordinal_labels):
     """Test that ordinal labels work correctly"""
     data = {
-        "x": [1, 2, 3],
-        "y1": [1, 2, 3],
-        "y2": [3, 1, 2],
-        "y3": [2, 3, 1],
+        "x": [1, 2, 3, 4, 5],
+        "y1": [1, 2, 3, 4, 5],
+        "y2": [5, 4, 3, 2, 1],
+        "y3": [2, 3, 4, 5, 1],
+        "y4": [3, 4, 5, 1, 2],
+        "y5": [4, 5, 1, 2, 3],
     }
     df = pd.DataFrame(data)
-
+    
     fig, ax = plt.subplots()
     ax = bumplot.bumplot(
         x="x",
-        y_columns=["y1", "y2", "y3"],
+        y_columns=["y1", "y2", "y3", "y4", "y5"],
         data=df,
         ax=ax,
-        ordinal_label=ordinal_label,
+        ordinal_labels=ordinal_labels,
         invert_y_axis=False,
     )
-
+    
     y_labels = [label.get_text() for label in ax.get_yticklabels()]
-
-    if ordinal_label:
-        assert any("st" in label for label in y_labels)
-        assert any("nd" in label for label in y_labels)
-        assert any("rd" in label for label in y_labels)
+    
+    if ordinal_labels:
+        assert "1st" in y_labels
+        assert "2nd" in y_labels
+        assert "3rd" in y_labels
+        assert "4th" in y_labels
+        assert "5th" in y_labels
     else:
         assert all(label.isdigit() for label in y_labels)
-
+    
     plt.close("all")
