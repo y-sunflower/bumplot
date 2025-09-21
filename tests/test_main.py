@@ -115,8 +115,12 @@ def test_bumplot_ordinal_labels(ordinal_labels):
     print(f"Y ticks: {ax.get_yticks()}")
 
     if ordinal_labels:
-        assert y_labels == ["5th", "4th", "3rd", "2nd", "1st"], f"Expected ordinal labels, got {y_labels}"
+        assert y_labels == ["5th", "4th", "3rd", "2nd", "1st"], (
+            f"Expected ordinal labels, got {y_labels}"
+        )
     else:
-        assert y_labels == ["5", "4", "3", "2", "1"], f"Expected numeric labels, got {y_labels}"
+        assert y_labels == ["5", "4", "3", "2", "1"], (
+            f"Expected numeric labels, got {y_labels}"
+        )
 
     plt.close("all")
