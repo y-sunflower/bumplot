@@ -43,7 +43,7 @@ def bumplot(
         plot_kwargs: Additional arguments passed to `patches.PathPatch()`
         scatter_kwargs: Additional arguments passed to `scatter()`
         ax: The matplotlib Axes used. Default to `plt.gca()`
-        ordinal_label: If True, converts y-axis labels to ordinal numbers (1st, 2nd, 3rd, etc.)
+        ordinal_labels: If True, converts y-axis labels to ordinal numbers (1st, 2nd, 3rd, etc.)
     Returns:
         The matplotlib Axes with the bump plot
     """
