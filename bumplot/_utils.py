@@ -26,3 +26,12 @@ def _ranked_df(df: IntoDataFrame, x: str, y_columns: list[str]):
     )
 
     return df_native_ranked
+
+
+def _to_ordinal(n: int) -> str:
+    """Convert number to ordinal string (1 -> '1st', 2 -> '2nd', etc.)"""
+    if 11 <= n % 100 <= 13:
+        suffix = "th"
+    else:
+        suffix = {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suffix}"

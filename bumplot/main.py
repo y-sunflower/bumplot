@@ -9,7 +9,7 @@ import numpy as np
 from narwhals.typing import IntoDataFrame
 
 from bumplot.bezier import bezier_curve
-from bumplot._utils import _get_first_n_colors, _ranked_df
+from bumplot._utils import _get_first_n_colors, _ranked_df, _to_ordinal
 
 
 def bumplot(
@@ -22,6 +22,7 @@ def bumplot(
     plot_kwargs: dict | None = None,
     scatter_kwargs: dict | None = None,
     ax: Axes | None = None,
+    ordinal_labels: bool = False,
 ) -> Axes:
     """
     Creates bump plot, or bump chart, from multiple numerical
@@ -42,7 +43,7 @@ def bumplot(
         plot_kwargs: Additional arguments passed to `patches.PathPatch()`
         scatter_kwargs: Additional arguments passed to `scatter()`
         ax: The matplotlib Axes used. Default to `plt.gca()`
-
+        ordinal_labels: If True, converts y-axis labels to ordinal numbers (1st, 2nd, 3rd, etc.)
     Returns:
         The matplotlib Axes with the bump plot
     """
@@ -94,11 +95,21 @@ def bumplot(
         ax.scatter(x_values, y_values, color=colors[i], label=col, **scatter_kwargs)
 
     ticks: list[int] = list(range(1, len(y_columns) + 1))
+
     if invert_y_axis:
         ax.invert_yaxis()
     else:
         ticks: list[int] = list(reversed(ticks))
+
     ax.set_yticks(ticks=ticks)
+
+    labels = (
+        [_to_ordinal(tick) for tick in ticks]
+        if ordinal_labels
+        else [str(tick) for tick in ticks]
+    )
+    ax.set_yticklabels(labels)
+
     ax.set_xticks(ticks=np.unique(x_values), labels=np.unique(x_labels))
 
     return ax

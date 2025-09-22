@@ -84,3 +84,43 @@ def test_bumplot_error():
         )
 
     plt.close("all")
+
+
+@pytest.mark.parametrize("ordinal_labels", [True, False])
+def test_bumplot_ordinal_labels(ordinal_labels):
+    """Test that ordinal labels work correctly"""
+    data = {
+        "x": [1, 2, 3, 4, 5],
+        "y1": [1, 2, 3, 4, 5],
+        "y2": [5, 4, 3, 2, 1],
+        "y3": [2, 3, 4, 5, 1],
+        "y4": [3, 4, 5, 1, 2],
+        "y5": [4, 5, 1, 2, 3],
+    }
+    df = pd.DataFrame(data)
+
+    fig, ax = plt.subplots()
+    ax = bumplot.bumplot(
+        x="x",
+        y_columns=["y1", "y2", "y3", "y4", "y5"],
+        data=df,
+        ax=ax,
+        ordinal_labels=ordinal_labels,
+        invert_y_axis=False,
+    )
+
+    y_labels = [label.get_text() for label in ax.get_yticklabels()]
+
+    print(f"Y labels: {y_labels}")
+    print(f"Y ticks: {ax.get_yticks()}")
+
+    if ordinal_labels:
+        assert y_labels == ["5th", "4th", "3rd", "2nd", "1st"], (
+            f"Expected ordinal labels, got {y_labels}"
+        )
+    else:
+        assert y_labels == ["5", "4", "3", "2", "1"], (
+            f"Expected numeric labels, got {y_labels}"
+        )
+
+    plt.close("all")
