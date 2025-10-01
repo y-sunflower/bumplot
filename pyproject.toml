@@ -48,6 +48,7 @@ dev = [
     "pyfonts>=1.1.1",
     "pypalettes>=0.1.6",
     "ty>=0.0.1a20",
+    "plotnine>=0.15.0",
 ]
 quarto = [
     "jupyter>=1.1.1",
