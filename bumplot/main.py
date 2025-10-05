@@ -19,8 +19,11 @@ def bumplot(
     curve_force: float = 1,
     invert_y_axis: bool = True,
     colors: list | None = None,
+    highlight: str | list[str] | dict[str, dict] | None = None,
     plot_kwargs: dict | None = None,
     scatter_kwargs: dict | None = None,
+    highlight_kwargs: dict | None = None,
+    non_highlight_kwargs: dict | None = None,
     ax: Axes | None = None,
     ordinal_labels: bool = False,
 ) -> Axes:
@@ -50,6 +53,19 @@ def bumplot(
     if ax is None:
         ax: Axes = plt.gca()
 
+    if highlight:
+        non_highlight_kwargs = (
+            {"alpha": 0.2, "lw": 2, "ec": "grey"}
+            if non_highlight_kwargs is None
+            else non_highlight_kwargs
+        )
+
+    if isinstance(highlight, (str, list)):
+        names = [highlight] if isinstance(highlight, str) else highlight
+        highlight = {name: (highlight_kwargs or {}) for name in names}
+    elif highlight is None:
+        highlight = {}
+
     default_plot_kwargs = {"facecolor": "none", "lw": 2}
     if plot_kwargs is None:
         plot_kwargs: dict = {}
@@ -78,6 +94,13 @@ def bumplot(
         x_labels = x_values_raw
 
     for i, col in enumerate(y_columns):
+        is_highlight = col in highlight
+        style = {**default_plot_kwargs}
+        if is_highlight:
+            style.update(highlight[col])
+        elif highlight:  # only apply dimming if highlight mode is active
+            style.update(non_highlight_kwargs or {})
+
         y_values: np.ndarray = np.ravel(ranked.select(col).to_numpy())
         vertices, codes = bezier_curve(
             x=x_values,
@@ -89,7 +112,7 @@ def bumplot(
         patch: PathPatch = patches.PathPatch(
             path=path,
             edgecolor=colors[i],
-            **default_plot_kwargs,
+            **style,
         )
         ax.add_patch(patch)
         ax.scatter(x_values, y_values, color=colors[i], label=col, **scatter_kwargs)
@@ -113,3 +136,19 @@ def bumplot(
     ax.set_xticks(ticks=np.unique(x_values), labels=np.unique(x_labels))
 
     return ax
+
+
+if __name__ == "__main__":
+    import pandas as pd
+
+    df = pd.DataFrame(
+        {
+            "x": [2020, 2021, 2022, 2023],
+            "A": [10, 50, 20, 80],
+            "B": [40, 30, 60, 10],
+            "C": [90, 20, 70, 40],
+            "D": [91, 19, 70, 40],
+        }
+    )
+    fig, ax = plt.subplots()
+    bumplot("x", ["A", "B", "C", "D"], df, highlight="B")
