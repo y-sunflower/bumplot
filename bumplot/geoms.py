@@ -1,27 +1,65 @@
 from __future__ import annotations
 
 import numpy as np
-import matplotlib.patches as patches
+import narwhals as nw
 from matplotlib.path import Path
 from matplotlib.collections import PathCollection
-from matplotlib.patches import PathPatch
 from typing import Any
 
-from .main import bumplot
 from .bezier import bezier_curve
+from ._utils import _ranked_df
 
 try:
     from plotnine._utils import SIZE_FACTOR, to_rgba
     from plotnine import geom_path
+    from plotnine.stats.stat import stat
     from plotnine.doctools import document
 except ImportError:
     raise ImportError("plotnine must be installed to use bumplot.geoms")
+
+# TODO:
+# curve_force
+# ggbump interpolates points for lines on the bezier curve
+
+class stat_rank(stat):
+    """Compute the rank of y values within each group.
+
+    This statistic assigns ranks to the y values within each group, which can
+    be useful for visualizations that require ranking information.
+
+    Parameters
+    ----------
+    {common_parameters}
+
+    Examples
+    --------
+
+
+    """
+
+    # TODO: I get an error if I don't set geom here,
+    # even though it is not on the base stat class
+    DEFAULT_PARAMS = {
+        "geom": "TODO",
+    }
+
+    def compute_group(self, data, scales):
+        return self._calc_rank(data)
+    
+    @staticmethod
+    def _calc_rank(data):
+        return (
+            nw
+            .from_native(data)
+            .with_columns(y=nw.col("y").rank(descending=True))
+            .to_native()
+        )
 
 
 @document
 class geom_bezier(geom_path):
     """Draw a bezier curve between points.
-    
+
     {usage}
 
     Parameters
@@ -47,19 +85,13 @@ class geom_bezier(geom_path):
         # fixed parameter curve_force for now
         curve_force = params["curve_force"]
 
-        # TODO: constant currently unused, but copied from plotnine
-        if "constant" in params:
-            constant: bool = params.pop("constant")
-        else:
-            constant = len(np.unique(data["group"].to_numpy())) == 1
-        
         color = to_rgba(data["color"], data["alpha"])
 
         indices: list[int] = []
         paths: list[Path] = []
 
-        # TODO: this assumes not constant
-        # but plotnine has handling for constant....
+        # Note that this is similar to the Plotnine geom_path non-constant
+        # logic, except that it creates a PathCollection, rather than lines.
         for _, df in data.groupby("group"):
             idx = df.index
             indices.extend(idx[:-1].to_list())
@@ -79,3 +111,23 @@ class geom_bezier(geom_path):
         coll = PathCollection(paths, **d)
         ax.add_collection(coll)
 
+@document
+class geom_bump(geom_bezier):
+    """Draw a bump plot using bezier curves between points.
+
+    {usage}
+
+    Parameters
+    ----------
+    {common_parameters}
+
+    Examples
+    --------
+
+
+    """
+
+    DEFAULT_PARAMS = {
+        **geom_bezier.DEFAULT_PARAMS,
+        "stat": "rank",
+    }
