@@ -21,6 +21,7 @@ except ImportError:
 # curve_force
 # ggbump interpolates points for lines on the bezier curve
 
+
 class stat_rank(stat):
     """Compute the rank of y values within each group.
 
@@ -45,12 +46,11 @@ class stat_rank(stat):
 
     def compute_group(self, data, scales):
         return self._calc_rank(data)
-    
+
     @staticmethod
     def _calc_rank(data):
         return (
-            nw
-            .from_native(data)
+            nw.from_native(data)
             .with_columns(y=nw.col("y").rank(descending=True))
             .to_native()
         )
@@ -95,7 +95,9 @@ class geom_bezier(geom_path):
         for _, df in data.groupby("group"):
             idx = df.index
             indices.extend(idx[:-1].to_list())
-            vertices, codes = bezier_curve(data["x"].to_numpy(), df["y"].to_numpy(), curve_force)
+            vertices, codes = bezier_curve(
+                data["x"].to_numpy(), df["y"].to_numpy(), curve_force
+            )
             paths.append(Path(vertices, codes))
 
         d = {
@@ -110,6 +112,7 @@ class geom_bezier(geom_path):
 
         coll = PathCollection(paths, **d)
         ax.add_collection(coll)
+
 
 @document
 class geom_bump(geom_bezier):
