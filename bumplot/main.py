@@ -1,29 +1,50 @@
+from dataclasses import dataclass
+
 import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
 from matplotlib.path import Path
 import matplotlib.patches as patches
 from matplotlib.patches import PathPatch
+from matplotlib.collections import PatchCollection
 
 import numpy as np
 
 from narwhals.typing import IntoDataFrame
 
 from bumplot.bezier import bezier_curve
-from bumplot._utils import _get_first_n_colors, _ranked_df, _to_ordinal
+from bumplot._utils import _ranked_df, _to_ordinal
+
+from typing import Tuple, Union
+
+
+@dataclass(frozen=True)
+class Bump:
+    name: str
+
+    line_style: str = "-"
+    line_color: str = "lightgrey"
+    line_width: float = 2
+    line_alpha: float = 1
+
+    marker: str = "o"
+    marker_size: float = 40
+    marker_alpha: float = 1
+    marker_facecolor: str = "black"
+    marker_edgecolor: str = "none"
+    marker_edgewidth: float = 2
+
+    clip_on: bool = True
 
 
 def bumplot(
     x: str,
-    y_columns: list[str],
+    y_columns: list[Union[Bump, str]],
     data: IntoDataFrame,
     curve_force: float = 1,
     invert_y_axis: bool = True,
-    colors: list | None = None,
-    plot_kwargs: dict | None = None,
-    scatter_kwargs: dict | None = None,
     ax: Axes | None = None,
     ordinal_labels: bool = False,
-) -> Axes:
+) -> Tuple[Axes, dict[Bump, Tuple[PathPatch, PatchCollection]]]:
     """
     Creates bump plot, or bump chart, from multiple numerical
     columns.
@@ -33,15 +54,12 @@ def bumplot(
 
     Args:
         x: colname of the x-axis variable
-        y_columns: colnames of the y-axis variables
+        y_columns: colnames of the y-axis variables and their plotting options.
         data: A dataframe
         curve_force: Smoothing factor controlling curve tightness. Higher
             values increase curvature by moving control points further away
             from the anchors.
         invert_y_axis: Whether to invert y axis
-        colors: An optional list of colors
-        plot_kwargs: Additional arguments passed to `patches.PathPatch()`
-        scatter_kwargs: Additional arguments passed to `scatter()`
         ax: The matplotlib Axes used. Default to `plt.gca()`
         ordinal_labels: If True, converts y-axis labels to ordinal numbers (1st, 2nd, 3rd, etc.)
     Returns:
@@ -50,22 +68,10 @@ def bumplot(
     if ax is None:
         ax: Axes = plt.gca()
 
-    default_plot_kwargs = {"facecolor": "none", "lw": 2}
-    if plot_kwargs is None:
-        plot_kwargs: dict = {}
-    default_plot_kwargs.update(plot_kwargs)
-
-    if scatter_kwargs is None:
-        scatter_kwargs: dict = {}
-
-    if colors is None:
-        colors: list[str] = _get_first_n_colors(n=len(y_columns))
-    else:
-        if len(colors) < len(y_columns):
-            raise ValueError(
-                f"Not enough colors: expected at least {len(y_columns)}, but got {len(colors)}"
-            )
-    ranked: IntoDataFrame = _ranked_df(data, x=x, y_columns=y_columns)
+    y_bumps: list[Bump] = [
+        y if isinstance(y, Bump) else Bump(name=y) for y in y_columns
+    ]
+    ranked: IntoDataFrame = _ranked_df(data, x=x, y_columns=[y.name for y in y_bumps])
     x_values_raw: np.ndarray = np.ravel(ranked.select(x).to_numpy())
 
     if np.issubdtype(x_values_raw.dtype, np.number):
@@ -77,8 +83,9 @@ def bumplot(
         x_values = np.array([mapping[val] for val in x_values_raw], dtype=int)
         x_labels = x_values_raw
 
-    for i, col in enumerate(y_columns):
-        y_values: np.ndarray = np.ravel(ranked.select(col).to_numpy())
+    artists = {}
+    for bump in y_bumps:
+        y_values: np.ndarray = np.ravel(ranked.select(bump.name).to_numpy())
         vertices, codes = bezier_curve(
             x=x_values,
             y=y_values,
@@ -88,13 +95,31 @@ def bumplot(
         path: Path = Path(vertices=vertices, codes=codes)
         patch: PathPatch = patches.PathPatch(
             path=path,
-            edgecolor=colors[i],
-            **default_plot_kwargs,
+            alpha=bump.line_alpha,
+            facecolor="none",
+            edgecolor=bump.line_color,
+            linestyle=bump.line_style,
+            linewidth=bump.line_width,
+            label=f"_{bump.name}",
+            clip_on=bump.clip_on,
         )
         ax.add_patch(patch)
-        ax.scatter(x_values, y_values, color=colors[i], label=col, **scatter_kwargs)
 
-    ticks: list[int] = list(range(1, len(y_columns) + 1))
+        scatter = ax.scatter(
+            x_values,
+            y_values,
+            label=bump.name,
+            marker=bump.marker,
+            s=bump.marker_size,
+            facecolor=bump.marker_facecolor,
+            edgecolor=bump.marker_edgecolor,
+            linewidth=bump.marker_edgewidth,
+            alpha=bump.marker_alpha,
+            clip_on=bump.clip_on,
+        )
+        artists[bump] = (patch, scatter)
+
+    ticks: list[int] = list(range(1, len(y_bumps) + 1))
 
     if invert_y_axis:
         ax.invert_yaxis()
@@ -112,4 +137,4 @@ def bumplot(
 
     ax.set_xticks(ticks=np.unique(x_values), labels=np.unique(x_labels))
 
-    return ax
+    return ax, artists
