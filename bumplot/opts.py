@@ -12,7 +12,7 @@ class BumpOpts(TypedDict, total=False):
     `opts()` to ensure only supported options are provided.
 
     The options are later translated into Matplotlib-specific keyword arguments
-    via `get_plot_kwargs()` and `get_scatter_kwargs()`.
+    via `_get_plot_kwargs()` and `_get_scatter_kwargs()`.
 
     Notes
     -----
@@ -129,7 +129,7 @@ def opts_from_color(color, /, **kwargs: Any) -> BumpOpts:
     return opts(**new_kwargs)
 
 
-def get_plot_kwargs(kwargs: BumpOpts, /) -> dict[str, Any]:
+def _get_plot_kwargs(kwargs: BumpOpts, /) -> dict[str, Any]:
     """
     Extract Matplotlib `plot` keyword arguments from a `BumpOpts` mapping.
 
@@ -160,7 +160,7 @@ def get_plot_kwargs(kwargs: BumpOpts, /) -> dict[str, Any]:
     return plot_kwargs
 
 
-def get_scatter_kwargs(kwargs: BumpOpts, /) -> dict[str, Any]:
+def _get_scatter_kwargs(kwargs: BumpOpts, /) -> dict[str, Any]:
     """
     Extract Matplotlib `scatter` keyword arguments from a `BumpOpts` mapping.
 

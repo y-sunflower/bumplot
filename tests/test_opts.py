@@ -1,7 +1,7 @@
 import pytest
 
 from bumplot import opts, opts_from_color
-from bumplot.opts import get_plot_kwargs, get_scatter_kwargs
+from bumplot.opts import _get_plot_kwargs, _get_scatter_kwargs
 
 
 def test_opts_accepts_all_valid_keys():
@@ -44,9 +44,9 @@ def test_opts_accepts_empty():
 def test_opts_from_color_sets_all_color_fields():
     o = opts_from_color("red")
 
-    assert o["line_color"] == "red"
-    assert o["marker_facecolor"] == "red"
-    assert o["marker_edgecolor"] == "red"
+    assert o["line_color"] == "red"  # type: ignore[reportTypedDictNotRequiredAccess]
+    assert o["marker_facecolor"] == "red"  # type: ignore[reportTypedDictNotRequiredAccess]
+    assert o["marker_edgecolor"] == "red"  # type: ignore[reportTypedDictNotRequiredAccess]
 
 
 def test_opts_from_color_overriden():
@@ -55,9 +55,27 @@ def test_opts_from_color_overriden():
         marker_facecolor="blue",
     )
 
-    assert o["marker_facecolor"] == "blue"
-    assert o["marker_edgecolor"] == "red"
-    assert o["line_color"] == "red"
+    assert o["marker_facecolor"] == "blue"  # type: ignore[reportTypedDictNotRequiredAccess]
+    assert o["marker_edgecolor"] == "red"  # type: ignore[reportTypedDictNotRequiredAccess]
+    assert o["line_color"] == "red"  # type: ignore[reportTypedDictNotRequiredAccess]
+
+
+def test_get_plot_kwargs_basic_mapping():
+    bump = opts(
+        line_width=4,
+        line_alpha=0.6,
+        clip_on=False,
+        zorder=3,
+    )
+
+    out = _get_plot_kwargs(bump)
+
+    assert out == {
+        "alpha": 0.6,
+        "linewidth": 4,
+        "clip_on": False,
+        "zorder": 3,
+    }
 
 
 def test_get_scatter_kwargs_basic_mapping():
@@ -69,7 +87,7 @@ def test_get_scatter_kwargs_basic_mapping():
         clip_on=False,
     )
 
-    out = get_scatter_kwargs(bump)
+    out = _get_scatter_kwargs(bump)
 
     assert out == {
         "marker": "o",
@@ -84,7 +102,7 @@ def test_getters_do_not_mutate_input():
     bump = opts(line_alpha=0.5)
     original = dict(bump)
 
-    get_plot_kwargs(bump)
-    get_scatter_kwargs(bump)
+    _get_plot_kwargs(bump)
+    _get_scatter_kwargs(bump)
 
     assert bump == original

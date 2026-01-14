@@ -10,7 +10,7 @@ import pytest
 from typing import Any
 
 import bumplot
-from bumplot.opts import get_plot_kwargs, get_scatter_kwargs
+from bumplot.opts import BumpOpts, _get_plot_kwargs, _get_scatter_kwargs
 
 
 def verify_plot_kwargs(artist: PathPatch, expected_kwargs: dict[str, Any]):
@@ -123,7 +123,9 @@ def test_bumplot(x, backend, curve_force):
     ],
     ids=["y2-default", "y2-overrides"],
 )
-def test_bumplot_options(plot_kwargs, scatter_kwargs, y2_opts):
+def test_bumplot_options(
+    plot_kwargs: dict[str, Any], scatter_kwargs: dict[str, Any], y2_opts: BumpOpts
+):
     data = {
         "x": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         "y1": [7, 2, 2, 5, 5, 6, 7, 2, 9, 1],
@@ -144,14 +146,16 @@ def test_bumplot_options(plot_kwargs, scatter_kwargs, y2_opts):
     )
     plt.close("all")
 
-    bump_opts = dict((y, {}) if isinstance(y, str) else y for y in y_columns)
+    bump_opts: dict[str, BumpOpts] = dict(
+        (y, bumplot.opts()) if isinstance(y, str) else y for y in y_columns
+    )
     for name, (path_patch, path_collection) in bump_artists.items():
         local_kwargs = bump_opts[name]
         if name == "y1":
             assert local_kwargs == {}
-        verify_plot_kwargs(path_patch, plot_kwargs | get_plot_kwargs(local_kwargs))
+        verify_plot_kwargs(path_patch, plot_kwargs | _get_plot_kwargs(local_kwargs))
         verify_scatter_kwargs(
-            path_collection, scatter_kwargs | get_scatter_kwargs(local_kwargs)
+            path_collection, scatter_kwargs | _get_scatter_kwargs(local_kwargs)
         )
 
 
