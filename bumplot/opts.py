@@ -64,12 +64,12 @@ def opts(**kwargs: Any) -> BumpOpts:
     Construct a validated `BumpOpts` mapping from keyword arguments.
 
     This function enforces that all provided keyword arguments correspond to
-    supported ``BumpOpts`` fields. Any unexpected keys result in a ``TypeError``.
+    supported `BumpOpts` fields. Any unexpected keys result in a `TypeError`.
 
     Parameters
     ----------
     **kwargs: Unpack[BumpOpts]
-        Keyword arguments corresponding to fields defined on ``BumpOpts``.
+        Keyword arguments corresponding to fields defined on `BumpOpts`.
 
     Returns
     -------
