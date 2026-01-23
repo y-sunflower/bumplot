@@ -1,15 +1,5 @@
-import matplotlib.pyplot as plt
-
 import narwhals as nw
 from narwhals.typing import IntoDataFrame
-
-
-def _get_first_n_colors(n=int) -> list[str]:
-    """
-    Get the first n colors from matplotlib rcParams.
-    """
-    colors: list[str] = plt.rcParams["axes.prop_cycle"].by_key()["color"][:n]
-    return colors
 
 
 def _ranked_df(df: IntoDataFrame, x: str, y_columns: list[str]):

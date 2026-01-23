@@ -115,37 +115,78 @@ bumplot(
 ax.legend()
 ```
 
-### Heavily styled bump chart
+### Flexible Styling
 
 ```python
 # mkdocs: render
 import matplotlib.pyplot as plt
 import pandas as pd
-from bumplot import bumplot
 
-df = pd.DataFrame(
+from bumplot import bumplot, opts, opts_from_color
+
+data = pd.DataFrame(
     {
-        "Stage": ["Q1", "Q2", "Q3", "Q4"],
-        "Alpha": [4, 3, 2, 1],
-        "Beta": [1, 2, 4, 3],
-        "Gamma": [2, 1, 3, 4],
+        "x": [2020, 2021, 2022, 2023],
+        "A": [10, 50, 20, 80],
+        "B": [40, 30, 60, 10],
+        "C": [90, 20, 70, 40],
     }
 )
 
-fig, ax = plt.subplots(figsize=(10, 5))
+fig, axes = plt.subplots(ncols=2, nrows=2, figsize=(12, 6), layout="constrained")
+
+axes[0, 0].set_title("Basic, no additional options")
+bumplot(x="x", y_columns=["A", "B", "C"], data=data, curve_force=0.5, ax=axes[0, 0])
+
+# plot_kwargs & scatter_kwargs to set the default styles for ALL bumps
+axes[0, 1].set_title(
+    "Plot-wide customizations passed via\ncolors=…, plot_kwargs=…, scatter_kwargs=…"
+)
 bumplot(
-    x="Stage",
-    y_columns=["Alpha", "Beta", "Gamma"],
-    data=df,
-    curve_force=0.3,
-    colors=["#e63946", "#626262ff", "#457b9d"],
-    plot_kwargs={"lw": 6, "alpha": 0.7},
-    scatter_kwargs={"s": 300, "ec": "black", "lw": 2},
-    ax=ax,
+    x="x",
+    y_columns=["A", "B", "C"],
+    data=data,
+    curve_force=0.5,
+    ax=axes[0, 1],
+    colors=["#ffbe0b", "#ff006e", "#3a86ff"],
+    plot_kwargs={"lw": 4},
+    scatter_kwargs={"s": 150, "ec": "black", "lw": 2, "marker": "d"},
 )
 
-ax.set_facecolor("#f8f9fa")
-ax.legend(frameon=False, ncol=1, bbox_to_anchor=(0, 0.5))
-ax.grid(alpha=0.3, ls="--")
-ax.spines[["top", "right", "left", "bottom"]].set_visible(False)
+# Customize individual Bumps via the opts(…) helper
+# See: `bumplot.opts.BumpOpts` for all keyword arguments one can pass
+axes[1, 0].set_title("Color & Style individual lines via opts")
+bumplot(
+    x="x",
+    y_columns=[
+        ("A", opts(line_color="#ffbe0b", marker="d", marker_size=140)),
+        ("B", opts(line_color="#ff006e", line_style="--")),
+        ("C", opts_from_color("#3a86ff", line_width=5, marker_edgecolor="black")),
+    ],
+    data=data,
+    curve_force=0.5,
+    ax=axes[1, 0],
+)
+
+# Mix individual Bump options with `plot_kwargs` and `scatter_kwargs`
+axes[1, 1].set_title("Mix options to create custom charts!")
+bumplot(
+    x="x",
+    y_columns=[
+        "A",
+        ("B", opts_from_color("#ff006e", zorder=2, line_width=4, marker_size=80)),
+        "C",
+    ],
+    data=data,
+    curve_force=0.5,
+    ax=axes[1, 1],
+    plot_kwargs={"lw": 1, "ec": "gray"},
+    scatter_kwargs={"fc": "gray", "ec": "gray", "s": 20},
+)
+
+for ax in axes.flat:
+    ax.margins(x=0.05)
+    ax.spines[["top", "right"]].set_visible(False)
+
+plt.show()
 ```
