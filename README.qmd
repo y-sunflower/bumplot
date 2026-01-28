@@ -1,0 +1,83 @@
+---
+format: gfm
+from: markdown-smart
+default-image-extension: ""
+---
+
+<!-- Automatically generated, uses README.qmd to modify README.md -->
+
+```{python}
+# | include: false
+# | echo: false
+
+import matplotlib.pyplot as plt
+
+plt.rcParams["figure.dpi"] = 200
+```
+
+# `bumplot`: easily create and customize bump charts in Python
+
+<img src="https://github.com/JosephBARBIERDARNAL/static/blob/main/python-libs/bumplot/image.png?raw=true" alt="bumplot logo" align="right" width="180px"/>
+
+`bumplot` is a small Python package made to facilitate the creation of **bump charts** using matplotlib and Bézier curves. It has high customization capabilities too!
+
+Bump charts are useful when the focus is on comparing **relative rankings**—who is ahead of whom—rather than the exact magnitude of the differences.
+
+Check out the [online documentation](https://y-sunflower.github.io/bumplot/)
+
+
+
+<br>
+<br>
+
+## Get started
+
+```{python}
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from bumplot import bumplot
+
+data = pd.DataFrame(
+    {
+        "x": [2020, 2021, 2022, 2023],
+        "A": [10, 50, 20, 80],
+        "B": [40, 30, 60, 10],
+        "C": [90, 20, 70, 40],
+    }
+)
+
+fig, ax = plt.subplots(figsize=(8, 4))
+bumplot(
+    x="x",
+    y_columns=["A", "B", "C"],
+    data=data,
+    curve_force=0.5,
+    plot_kwargs={"lw": 4},
+    scatter_kwargs={"s": 150, "ec": "black", "lw": 2},
+    colors=["#ffbe0b", "#ff006e", "#3a86ff"],
+)
+ax.legend()
+ax.spines[["top", "right", "left", "bottom"]].set_visible(False)
+ax.grid(alpha=0.4)
+```
+
+[See more examples](https://y-sunflower.github.io/bumplot/examples/)
+
+<br>
+<br>
+
+## Installation
+
+```
+pip install bumplot
+```
+
+<br><br>
+
+## Features
+
+- Automatic ranking of your data (with support for both `pandas` and `polars`)
+- Accept categorical data for x-axis
+- Infinite customization capabilities
+- Easy control of the curvature intensity
