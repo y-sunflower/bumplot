@@ -187,6 +187,4 @@ bumplot(
 for ax in axes.flat:
     ax.margins(x=0.05)
     ax.spines[["top", "right"]].set_visible(False)
-
-plt.show()
 ```

@@ -37,16 +37,18 @@ You can now make changes to the package and start coding!
 
 ### Run the test
 
+It's recommended to use [just](https://github.com/casey/just).
+
 - Test that everything works correctly by running:
 
 ```bash
-make test
+just test
 ```
 
 ### Preview documentation locally
 
 ```bash
-make preview
+just preview
 ```
 
 ## Push changes
