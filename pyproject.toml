@@ -1,7 +1,7 @@
 [project]
 name = "bumplot"
 description = "Easily create and customize bump charts in Python"
-version = "0.2.0"
+version = "0.2.1"
 license = "MIT"
 license-files = ["LICENSE"]
 keywords = ["bump", "bump plot", "bump charts", "matplotlib", "data", "visualization", "bezier", "curve"]
@@ -13,7 +13,7 @@ requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
-    "Development Status :: 5 - Stable"
+    "Development Status :: 5 - Production/Stable"
 ]
 dependencies = [
     "matplotlib>=3.9.4",
