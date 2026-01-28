@@ -20,4 +20,4 @@ env/
 
 *.zip
 sandbox/
-scripts/release.sh
+release.sh
