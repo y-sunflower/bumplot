@@ -11,8 +11,9 @@ Bump charts are useful when the focus is on comparing **relative rankings**—wh
 
 ## Quick start
 
-```python
-# mkdocs: render
+```python exec="on" source="above" html="true"
+import matplotlib  # markdown-exec: hide
+matplotlib.use("Agg")  # markdown-exec: hide
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -40,6 +41,13 @@ bumplot(
 ax.legend()
 ax.spines[["top", "right", "left", "bottom"]].set_visible(False)
 ax.grid(alpha=0.4)
+from base64 import b64encode  # markdown-exec: hide
+from io import BytesIO  # markdown-exec: hide
+
+buffer = BytesIO()  # markdown-exec: hide
+fig.savefig(buffer, format="png")  # markdown-exec: hide
+print('<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(b64encode(buffer.getvalue()).decode()))  # markdown-exec: hide
+plt.close(fig)  # markdown-exec: hide
 ```
 
 [See more examples](./examples.md)

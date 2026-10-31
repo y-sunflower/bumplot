@@ -9,9 +9,10 @@ These examples are also designed to be easy to reproduce: you should be able to 
 
 ## Water sources in Africa
 
-```py
-# mkdocs: render
+```python exec="on" source="above" html="true"
 import pandas as pd
+import matplotlib  # markdown-exec: hide
+matplotlib.use("Agg")  # markdown-exec: hide
 import matplotlib.pyplot as plt
 from pyfonts import set_default_font, load_google_font
 
@@ -36,7 +37,7 @@ _, bump_artists = bumplot(
     data=df,
     curve_force=0.7,
     ordinal_labels=True,
-    colors=["lightgray"]
+    colors=["lightgray"],
 )
 ax.spines[["top", "right", "left", "bottom"]].set_visible(False)
 ax.margins(x=0.01)
@@ -87,6 +88,13 @@ fig.text(
     font=load_google_font("Poppins", italic=True),
     size=10,
 )
+from base64 import b64encode  # markdown-exec: hide
+from io import BytesIO  # markdown-exec: hide
+
+buffer = BytesIO()  # markdown-exec: hide
+fig.savefig(buffer, format="png")  # markdown-exec: hide
+print('<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(b64encode(buffer.getvalue()).decode()))  # markdown-exec: hide
+plt.close(fig)  # markdown-exec: hide
 ```
 
 <br>
@@ -94,9 +102,10 @@ fig.text(
 
 ## Global CO₂ Emissions Rankings
 
-```py
-# mkdocs: render
+```python exec="on" source="above" html="true"
 import pandas as pd
+import matplotlib  # markdown-exec: hide
+matplotlib.use("Agg")  # markdown-exec: hide
 import matplotlib.pyplot as plt
 from pyfonts import set_default_font, load_google_font
 
@@ -228,4 +237,11 @@ fig.text(
     font=font_bold,
     size=8,
 )
+from base64 import b64encode  # markdown-exec: hide
+from io import BytesIO  # markdown-exec: hide
+
+buffer = BytesIO()  # markdown-exec: hide
+fig.savefig(buffer, format="png")  # markdown-exec: hide
+print('<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(b64encode(buffer.getvalue()).decode()))  # markdown-exec: hide
+plt.close(fig)  # markdown-exec: hide
 ```

@@ -1,8 +1,11 @@
+from typing import Any
+
 import narwhals as nw
+from narwhals import DataFrame
 from narwhals.typing import IntoDataFrame
 
 
-def _ranked_df(df: IntoDataFrame, x: str, y_columns: list[str]):
+def _ranked_df(df: IntoDataFrame, x: str, y_columns: list[str]) -> DataFrame[Any]:
     """
     Convert a dataframe to a ranked version of it.
     """
