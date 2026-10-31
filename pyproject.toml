@@ -37,7 +37,7 @@ dev = [
   "pytest>=8.3.5",
   "ruff>=0.17.3",
   "ty>=0.0.95",
-  "zensical>=0.0.67",
+  "zensical>=0.0.67,<0.0.74",
 ]
 
 [build-system]
