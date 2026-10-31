@@ -13,7 +13,6 @@ extra_css = ["stylesheets/style.css"]
 
 [project.theme]
 variant = "classic"
-custom_dir = "overrides"
 features = [
   "content.code.copy",
   "navigation.path",

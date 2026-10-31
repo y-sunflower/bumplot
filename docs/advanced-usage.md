@@ -11,6 +11,8 @@ These examples are also designed to be easy to reproduce: you should be able to 
 
 ```python exec="on" source="above" html="true"
 import pandas as pd
+import matplotlib  # markdown-exec: hide
+matplotlib.use("Agg")  # markdown-exec: hide
 import matplotlib.pyplot as plt
 from pyfonts import set_default_font, load_google_font
 
@@ -91,11 +93,7 @@ from io import BytesIO  # markdown-exec: hide
 
 buffer = BytesIO()  # markdown-exec: hide
 fig.savefig(buffer, format="png")  # markdown-exec: hide
-print(
-    '<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(
-        b64encode(buffer.getvalue()).decode()
-    )
-)  # markdown-exec: hide
+print('<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(b64encode(buffer.getvalue()).decode()))  # markdown-exec: hide
 plt.close(fig)  # markdown-exec: hide
 ```
 
@@ -106,6 +104,8 @@ plt.close(fig)  # markdown-exec: hide
 
 ```python exec="on" source="above" html="true"
 import pandas as pd
+import matplotlib  # markdown-exec: hide
+matplotlib.use("Agg")  # markdown-exec: hide
 import matplotlib.pyplot as plt
 from pyfonts import set_default_font, load_google_font
 
@@ -242,10 +242,6 @@ from io import BytesIO  # markdown-exec: hide
 
 buffer = BytesIO()  # markdown-exec: hide
 fig.savefig(buffer, format="png")  # markdown-exec: hide
-print(
-    '<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(
-        b64encode(buffer.getvalue()).decode()
-    )
-)  # markdown-exec: hide
+print('<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(b64encode(buffer.getvalue()).decode()))  # markdown-exec: hide
 plt.close(fig)  # markdown-exec: hide
 ```

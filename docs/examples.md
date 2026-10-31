@@ -1,6 +1,8 @@
 ### Minimal bump chart with default settings
 
 ```python exec="on" source="above" html="true"
+import matplotlib  # markdown-exec: hide
+matplotlib.use("Agg")  # markdown-exec: hide
 import matplotlib.pyplot as plt
 import pandas as pd
 from bumplot import bumplot
@@ -22,17 +24,15 @@ from io import BytesIO  # markdown-exec: hide
 
 buffer = BytesIO()  # markdown-exec: hide
 fig.savefig(buffer, format="png")  # markdown-exec: hide
-print(
-    '<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(
-        b64encode(buffer.getvalue()).decode()
-    )
-)  # markdown-exec: hide
+print('<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(b64encode(buffer.getvalue()).decode()))  # markdown-exec: hide
 plt.close(fig)  # markdown-exec: hide
 ```
 
 ### Stronger curves with custom colors
 
 ```python exec="on" source="above" html="true"
+import matplotlib  # markdown-exec: hide
+matplotlib.use("Agg")  # markdown-exec: hide
 import matplotlib.pyplot as plt
 import pandas as pd
 from bumplot import bumplot
@@ -62,17 +62,15 @@ from io import BytesIO  # markdown-exec: hide
 
 buffer = BytesIO()  # markdown-exec: hide
 fig.savefig(buffer, format="png")  # markdown-exec: hide
-print(
-    '<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(
-        b64encode(buffer.getvalue()).decode()
-    )
-)  # markdown-exec: hide
+print('<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(b64encode(buffer.getvalue()).decode()))  # markdown-exec: hide
 plt.close(fig)  # markdown-exec: hide
 ```
 
 ### Multiple bump plots on subplots
 
 ```python exec="on" source="above" html="true"
+import matplotlib  # markdown-exec: hide
+matplotlib.use("Agg")  # markdown-exec: hide
 import matplotlib.pyplot as plt
 import pandas as pd
 from bumplot import bumplot
@@ -106,17 +104,15 @@ from io import BytesIO  # markdown-exec: hide
 
 buffer = BytesIO()  # markdown-exec: hide
 fig.savefig(buffer, format="png")  # markdown-exec: hide
-print(
-    '<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(
-        b64encode(buffer.getvalue()).decode()
-    )
-)  # markdown-exec: hide
+print('<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(b64encode(buffer.getvalue()).decode()))  # markdown-exec: hide
 plt.close(fig)  # markdown-exec: hide
 ```
 
 ### Without inverting y-axis
 
 ```python exec="on" source="above" html="true"
+import matplotlib  # markdown-exec: hide
+matplotlib.use("Agg")  # markdown-exec: hide
 import matplotlib.pyplot as plt
 import pandas as pd
 from bumplot import bumplot
@@ -143,17 +139,15 @@ from io import BytesIO  # markdown-exec: hide
 
 buffer = BytesIO()  # markdown-exec: hide
 fig.savefig(buffer, format="png")  # markdown-exec: hide
-print(
-    '<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(
-        b64encode(buffer.getvalue()).decode()
-    )
-)  # markdown-exec: hide
+print('<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(b64encode(buffer.getvalue()).decode()))  # markdown-exec: hide
 plt.close(fig)  # markdown-exec: hide
 ```
 
 ### Flexible Styling
 
 ```python exec="on" source="above" html="true"
+import matplotlib  # markdown-exec: hide
+matplotlib.use("Agg")  # markdown-exec: hide
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -227,10 +221,6 @@ from io import BytesIO  # markdown-exec: hide
 
 buffer = BytesIO()  # markdown-exec: hide
 fig.savefig(buffer, format="png")  # markdown-exec: hide
-print(
-    '<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(
-        b64encode(buffer.getvalue()).decode()
-    )
-)  # markdown-exec: hide
+print('<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(b64encode(buffer.getvalue()).decode()))  # markdown-exec: hide
 plt.close(fig)  # markdown-exec: hide
 ```
