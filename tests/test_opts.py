@@ -5,20 +5,20 @@ from bumplot.opts import _get_plot_kwargs, _get_scatter_kwargs
 
 
 def test_opts_accepts_all_valid_keys():
-    kwargs = dict(
-        line_alpha=0.5,
-        line_color="red",
-        line_style="--",
-        line_width=2.0,
-        marker="o",
-        marker_size=10,
-        marker_alpha=0.8,
-        marker_facecolor="blue",
-        marker_edgecolor="black",
-        marker_edgewidth=1.5,
-        clip_on=True,
-        zorder=3,
-    )
+    kwargs = {
+        "line_alpha": 0.5,
+        "line_color": "red",
+        "line_style": "--",
+        "line_width": 2.0,
+        "marker": "o",
+        "marker_size": 10,
+        "marker_alpha": 0.8,
+        "marker_facecolor": "blue",
+        "marker_edgecolor": "black",
+        "marker_edgewidth": 1.5,
+        "clip_on": True,
+        "zorder": 3,
+    }
 
     assert opts(**kwargs) == kwargs
 

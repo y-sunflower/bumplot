@@ -1,4 +1,5 @@
-from typing import Any, TypedDict
+from collections.abc import Mapping
+from typing import Any, TypedDict, cast
 
 
 class BumpOpts(TypedDict, total=False):
@@ -151,12 +152,11 @@ def _get_plot_kwargs(kwargs: BumpOpts, /) -> dict[str, Any]:
     -----
     - Only keys present in both `kwargs` and `PLOT_MAPPINGS` are included.
     """
-    plot_kwargs = {}
+    kwargs_mapping = cast(Mapping[str, Any], kwargs)
+    plot_kwargs: dict[str, Any] = {}
     for bump_arg, mpl_arg in PLOT_MAPPINGS.items():
-        try:
-            plot_kwargs[mpl_arg] = kwargs[bump_arg]  # type: ignore[invalid-key]
-        except KeyError:
-            pass
+        if bump_arg in kwargs_mapping:
+            plot_kwargs[mpl_arg] = kwargs_mapping[bump_arg]
     return plot_kwargs
 
 
@@ -182,10 +182,9 @@ def _get_scatter_kwargs(kwargs: BumpOpts, /) -> dict[str, Any]:
     -----
     - Only keys present in both `kwargs` and `SCATTER_MAPPINGS` are included.
     """
-    scatter_kwargs = {}
+    kwargs_mapping = cast(Mapping[str, Any], kwargs)
+    scatter_kwargs: dict[str, Any] = {}
     for bump_arg, mpl_arg in SCATTER_MAPPINGS.items():
-        try:
-            scatter_kwargs[mpl_arg] = kwargs[bump_arg]  # type: ignore[invalid-key]
-        except KeyError:
-            pass
+        if bump_arg in kwargs_mapping:
+            scatter_kwargs[mpl_arg] = kwargs_mapping[bump_arg]
     return scatter_kwargs

@@ -6,7 +6,7 @@ coverage:
     rm coverage.xml
 
 preview:
-    uv run mkdocs serve
+    uv run zensical serve
 
 test:
     uv run pytest

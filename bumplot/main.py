@@ -1,23 +1,20 @@
-from collections import ChainMap
+from collections.abc import Iterable
 from itertools import cycle
+from typing import Any
 
 import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib import patches
 from matplotlib.axes import Axes
-from matplotlib.path import Path
-import matplotlib.patches as patches
 from matplotlib.cbook import normalize_kwargs
 from matplotlib.collections import PathCollection
 from matplotlib.patches import PathPatch
-
-import numpy as np
-
+from matplotlib.path import Path
 from narwhals.typing import IntoDataFrame
 
-from .bezier import bezier_curve
 from ._utils import _ranked_df, _to_ordinal
+from .bezier import bezier_curve
 from .opts import BumpOpts, _get_plot_kwargs, _get_scatter_kwargs
-
-from typing import Any, Iterable, Tuple
 
 
 def bumplot(
@@ -27,11 +24,11 @@ def bumplot(
     curve_force: float = 1,
     invert_y_axis: bool = True,
     colors: Iterable[str] | None = None,
-    plot_kwargs: dict[str, Any] = {},
-    scatter_kwargs: dict[str, Any] = {},
+    plot_kwargs: dict[str, Any] | None = None,
+    scatter_kwargs: dict[str, Any] | None = None,
     ax: Axes | None = None,
     ordinal_labels: bool = False,
-) -> Tuple[Axes, dict[str, Tuple[PathPatch, PathCollection]]]:
+) -> tuple[Axes, dict[str, tuple[PathPatch, PathCollection]]]:
     """
     Creates bump plot, or bump chart, from multiple numerical
     columns.
@@ -55,6 +52,8 @@ def bumplot(
     Returns:
         The matplotlib Axes with the bump plot
     """
+    plot_kwargs = {} if plot_kwargs is None else plot_kwargs
+    scatter_kwargs = {} if scatter_kwargs is None else scatter_kwargs
     _plot_ax: Axes = ax if ax is not None else plt.gca()
     colors_iterable = (
         colors
@@ -65,7 +64,7 @@ def bumplot(
     y_bumps: list[tuple[str, BumpOpts]] = [
         (y, BumpOpts()) if isinstance(y, str) else y for y in y_columns
     ]
-    ranked: IntoDataFrame = _ranked_df(data, x=x, y_columns=[y for y, _ in y_bumps])
+    ranked = _ranked_df(data, x=x, y_columns=[y for y, _ in y_bumps])
     x_values_raw: np.ndarray = np.ravel(ranked.select(x).to_numpy())
 
     if np.issubdtype(x_values_raw.dtype, np.number):
@@ -87,26 +86,20 @@ def bumplot(
         )
 
         path: Path = Path(vertices=vertices, codes=codes)
-        patch: PathPatch = patches.PathPatch(
-            path=path,
-            facecolor="none",
-            **ChainMap(
-                _get_plot_kwargs(bump_opts),
-                normalize_kwargs(plot_kwargs, PathPatch),
-                {"edgecolor": color},
-            ),
-        )
+        path_kwargs: dict[str, Any] = {"edgecolor": color}
+        path_kwargs.update(normalize_kwargs(plot_kwargs, PathPatch))
+        path_kwargs.update(_get_plot_kwargs(bump_opts))
+        patch: PathPatch = patches.PathPatch(path=path, facecolor="none", **path_kwargs)
         _plot_ax.add_patch(patch)
 
+        artist_scatter_kwargs: dict[str, Any] = {"facecolor": color}
+        artist_scatter_kwargs.update(normalize_kwargs(scatter_kwargs, PathCollection))
+        artist_scatter_kwargs.update(_get_scatter_kwargs(bump_opts))
         scatter = _plot_ax.scatter(
             x_values,
             y_values,
             label=name,
-            **ChainMap(
-                _get_scatter_kwargs(bump_opts),
-                normalize_kwargs(scatter_kwargs, PathCollection),
-                {"facecolor": color},
-            ),
+            **artist_scatter_kwargs,
         )
         artists[name] = (patch, scatter)
 

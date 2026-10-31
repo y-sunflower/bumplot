@@ -1,13 +1,12 @@
-import matplotlib.pyplot as plt
-from matplotlib.colors import to_rgb
-from matplotlib.patches import PathPatch
-from matplotlib.collections import PathCollection
+from typing import Any
 
+import matplotlib.pyplot as plt
 import pandas as pd
 import polars as pl
-
 import pytest
-from typing import Any
+from matplotlib.collections import PathCollection
+from matplotlib.colors import to_rgb
+from matplotlib.patches import PathPatch
 
 import bumplot
 from bumplot.opts import BumpOpts, _get_plot_kwargs, _get_scatter_kwargs
@@ -172,7 +171,7 @@ def test_bumplot_ordinal_labels(ordinal_labels):
     }
     df = pd.DataFrame(data)
 
-    fig, ax = plt.subplots()
+    _fig, ax = plt.subplots()
     bumplot.bumplot(
         x="x",
         y_columns=["y1", "y2", "y3", "y4", "y5"],

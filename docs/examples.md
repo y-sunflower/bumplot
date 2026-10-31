@@ -1,7 +1,6 @@
 ### Minimal bump chart with default settings
 
-```python
-# mkdocs: render
+```python exec="on" source="above" html="true"
 import matplotlib.pyplot as plt
 import pandas as pd
 from bumplot import bumplot
@@ -18,12 +17,22 @@ df = pd.DataFrame(
 fig, ax = plt.subplots(figsize=(6, 3))
 bumplot(x="year", y_columns=["Team A", "Team B", "Team C"], data=df)
 ax.legend()
+from base64 import b64encode  # markdown-exec: hide
+from io import BytesIO  # markdown-exec: hide
+
+buffer = BytesIO()  # markdown-exec: hide
+fig.savefig(buffer, format="png")  # markdown-exec: hide
+print(
+    '<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(
+        b64encode(buffer.getvalue()).decode()
+    )
+)  # markdown-exec: hide
+plt.close(fig)  # markdown-exec: hide
 ```
 
 ### Stronger curves with custom colors
 
-```python
-# mkdocs: render
+```python exec="on" source="above" html="true"
 import matplotlib.pyplot as plt
 import pandas as pd
 from bumplot import bumplot
@@ -48,12 +57,22 @@ bumplot(
     plot_kwargs={"lw": 3},
 )
 ax.legend()
+from base64 import b64encode  # markdown-exec: hide
+from io import BytesIO  # markdown-exec: hide
+
+buffer = BytesIO()  # markdown-exec: hide
+fig.savefig(buffer, format="png")  # markdown-exec: hide
+print(
+    '<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(
+        b64encode(buffer.getvalue()).decode()
+    )
+)  # markdown-exec: hide
+plt.close(fig)  # markdown-exec: hide
 ```
 
 ### Multiple bump plots on subplots
 
-```python
-# mkdocs: render
+```python exec="on" source="above" html="true"
 import matplotlib.pyplot as plt
 import pandas as pd
 from bumplot import bumplot
@@ -70,28 +89,34 @@ df = pd.DataFrame(
 fig, axs = plt.subplots(1, 2, figsize=(12, 4))
 
 bumplot(
-   x="round",
-   y_columns=["P1", "P2"],
-   data=df,
-   ax=axs[0],
-   colors=["#219ebc", "#ffb703"]
+    x="round", y_columns=["P1", "P2"], data=df, ax=axs[0], colors=["#219ebc", "#ffb703"]
 )
 axs[0].legend()
 
 bumplot(
-   x="round",
-   y_columns=["P2", "P3"],
-   data=df,
-   ax=axs[1],
-   colors=["#ffb703", "#da5363ff"]
+    x="round",
+    y_columns=["P2", "P3"],
+    data=df,
+    ax=axs[1],
+    colors=["#ffb703", "#da5363ff"],
 )
 axs[1].legend()
+from base64 import b64encode  # markdown-exec: hide
+from io import BytesIO  # markdown-exec: hide
+
+buffer = BytesIO()  # markdown-exec: hide
+fig.savefig(buffer, format="png")  # markdown-exec: hide
+print(
+    '<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(
+        b64encode(buffer.getvalue()).decode()
+    )
+)  # markdown-exec: hide
+plt.close(fig)  # markdown-exec: hide
 ```
 
 ### Without inverting y-axis
 
-```python
-# mkdocs: render
+```python exec="on" source="above" html="true"
 import matplotlib.pyplot as plt
 import pandas as pd
 from bumplot import bumplot
@@ -113,12 +138,22 @@ bumplot(
     colors=["#06d6a0", "#118ab2"],
 )
 ax.legend()
+from base64 import b64encode  # markdown-exec: hide
+from io import BytesIO  # markdown-exec: hide
+
+buffer = BytesIO()  # markdown-exec: hide
+fig.savefig(buffer, format="png")  # markdown-exec: hide
+print(
+    '<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(
+        b64encode(buffer.getvalue()).decode()
+    )
+)  # markdown-exec: hide
+plt.close(fig)  # markdown-exec: hide
 ```
 
 ### Flexible Styling
 
-```python
-# mkdocs: render
+```python exec="on" source="above" html="true"
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -187,4 +222,15 @@ bumplot(
 for ax in axes.flat:
     ax.margins(x=0.05)
     ax.spines[["top", "right"]].set_visible(False)
+from base64 import b64encode  # markdown-exec: hide
+from io import BytesIO  # markdown-exec: hide
+
+buffer = BytesIO()  # markdown-exec: hide
+fig.savefig(buffer, format="png")  # markdown-exec: hide
+print(
+    '<img alt="Rendered plot" src="data:image/png;base64,{}">'.format(
+        b64encode(buffer.getvalue()).decode()
+    )
+)  # markdown-exec: hide
+plt.close(fig)  # markdown-exec: hide
 ```
