@@ -47,6 +47,9 @@ requires = [
 ]
 build-backend = "setuptools.build_meta"
 
+[tool.ruff]
+extend-exclude = ["docs/"]
+
 [tool.setuptools]
 packages = ["bumplot"]
 
