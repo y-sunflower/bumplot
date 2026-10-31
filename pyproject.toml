@@ -1,29 +1,50 @@
 [project]
 name = "bumplot"
-description = "Easily create and customize bump charts in Python"
 version = "0.2.1"
-license = "MIT"
-license-files = ["LICENSE"]
-keywords = ["bump", "bump plot", "bump charts", "matplotlib", "data", "visualization", "bezier", "curve"]
-authors = [
-  { name="Joseph Barbier", email="joseph.barbierdarnal@gmail.com" },
-]
+description = "Easily create and customize bump charts in Python"
 readme = "README.md"
 requires-python = ">=3.10"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "Operating System :: OS Independent",
-    "Development Status :: 5 - Production/Stable"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+  { name = "Joseph Barbier", email = "joseph.barbierdarnal@gmail.com" },
 ]
+keywords = ["bezier", "bump", "bump charts", "bump plot", "curve", "data", "matplotlib", "visualization"]
+classifiers = ["Development Status :: 5 - Production/Stable", "Operating System :: OS Independent", "Programming Language :: Python :: 3"]
 dependencies = [
-    "matplotlib>=3.9.4",
-    "narwhals>=2.0.0",
+  "matplotlib>=3.9.4",
+  "narwhals>=2.0.0",
+]
+
+[project.urls]
+Documentation = "https://y-sunflower.github.io/bumplot/"
+Homepage = "https://y-sunflower.github.io/bumplot/"
+Issues = "https://github.com/y-sunflower/bumplot/issues"
+Repository = "https://github.com/y-sunflower/bumplot"
+
+[dependency-groups]
+dev = [
+  "coverage>=7.9.1",
+  "genbadge>=1.1.2",
+  "mkdocs-material>=9.6.9",
+  "mkdocs-matplotlib>=0.10.1",
+  "mkdocstrings-python>=1.16.5",
+  "pandas>=2.3.2",
+  "polars>=1.32.3",
+  "pre-commit>=4.2.0",
+  "pyfonts>=1.1.1",
+  "pypalettes>=0.1.6",
+  "pyrefly>=1.4.0",
+  "pytest>=8.3.5",
+  "ruff>=0.17.3",
+  "ty>=0.0.95",
+  "zensical>=0.0.67",
 ]
 
 [build-system]
 requires = [
-    "setuptools",
-    "setuptools-scm",
+  "setuptools",
+  "setuptools-scm",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -32,32 +53,3 @@ packages = ["bumplot"]
 
 [tool.uv.sources]
 bumplot = { workspace = true }
-
-[dependency-groups]
-dev = [
-    "pre-commit>=4.2.0",
-    "pytest>=8.3.5",
-    "ruff>=0.11.13",
-    "mkdocs-material>=9.6.9",
-    "mkdocstrings-python>=1.16.5",
-    "coverage>=7.9.1",
-    "genbadge>=1.1.2",
-    "pandas>=2.3.2",
-    "polars>=1.32.3",
-    "mkdocs-matplotlib>=0.10.1",
-    "pyfonts>=1.1.1",
-    "pypalettes>=0.1.6",
-    "ty>=0.0.1a20",
-]
-quarto = [
-    "jupyter>=1.1.1",
-    "nbclient>=0.10.2",
-    "nbformat>=5.10.4",
-    "pyyaml>=6.0.2",
-]
-
-[project.urls]
-Homepage = "https://y-sunflower.github.io/bumplot/"
-Issues = "https://github.com/y-sunflower/bumplot/issues"
-Documentation = "https://y-sunflower.github.io/bumplot/"
-Repository = "https://github.com/y-sunflower/bumplot"

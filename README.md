@@ -1,19 +1,12 @@
 # `bumplot`: easily create and customize bump charts in Python
 
-<!-- Automatically generated, uses README.qmd to modify README.md -->
-
 <img src="https://github.com/JosephBARBIERDARNAL/static/blob/main/python-libs/bumplot/image.png?raw=true" alt="bumplot logo" align="right" width="180px"/>
 
-`bumplot` is a small Python package made to facilitate the creation of
-**bump charts** using matplotlib and Bézier curves. It has high
-customization capabilities too!
+`bumplot` is a small Python package made to facilitate the creation of **bump charts** using matplotlib and Bézier curves. It has high customization capabilities too!
 
-Bump charts are useful when the focus is on comparing **relative
-rankings**—who is ahead of whom—rather than the exact magnitude of the
-differences.
+Bump charts are useful when the focus is on comparing **relative rankings**—who is ahead of whom—rather than the exact magnitude of the differences.
 
-Check out the [online
-documentation](https://y-sunflower.github.io/bumplot/)
+Check out the [online documentation](https://y-sunflower.github.io/bumplot/)
 
 <br> <br>
 
@@ -49,7 +42,7 @@ ax.spines[["top", "right", "left", "bottom"]].set_visible(False)
 ax.grid(alpha=0.4)
 ```
 
-![](README_files/figure-commonmark/cell-3-output-1.png)
+![A simple bump chart made with Python and bumplot](example.png)
 
 [See more examples](https://y-sunflower.github.io/bumplot/examples/)
 
@@ -57,14 +50,15 @@ ax.grid(alpha=0.4)
 
 ## Installation
 
-    pip install bumplot
+```sh
+pip install bumplot
+```
 
 <br><br>
 
 ## Features
 
-- Automatic ranking of your data (with support for both `pandas` and
-  `polars`)
+- Automatic ranking of your data (with support for both `pandas` and `polars`)
 - Accept categorical data for x-axis
 - Infinite customization capabilities
 - Easy control of the curvature intensity
