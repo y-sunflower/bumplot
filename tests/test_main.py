@@ -38,7 +38,7 @@ def verify_scatter_kwargs(artist: PathCollection, expected_kwargs: dict[str, Any
 
 
 def test_version():
-    assert bumplot.__version__ == "0.2.1"
+    assert bumplot.__version__ == "0.3.0"
 
 
 @pytest.mark.parametrize(

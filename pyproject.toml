@@ -1,6 +1,6 @@
 [project]
 name = "bumplot"
-version = "0.2.1"
+version = "0.3.0"
 description = "Easily create and customize bump charts in Python"
 readme = "README.md"
 requires-python = ">=3.10"
