@@ -22,3 +22,5 @@ env/
 sandbox/
 release.sh
 .claude/
+
+site/
